@@ -172,6 +172,8 @@ static uint32_t YCALCBLOCKS(uint64_t partition_size, uint32_t block_size)
 
 #include <linux/uaccess.h>
 #include <linux/mtd/mtd.h>
+#include <linux/timekeeping.h>
+#include <uapi/linux/mount.h>
 
 #include "yportenv.h"
 #include "yaffs_trace.h"
@@ -273,8 +275,12 @@ MODULE_PARM(yaffs_gc_control, "i");
 		(dir)->i_ctime = (dir)->i_mtime = current_kernel_time(); \
 	} while (0)
 #else
+//#define update_dir_time(dir) do {\
+//		(dir)->i_ctime = (dir)->i_mtime = current_kernel_time64(); \
+//	} while (0)
 #define update_dir_time(dir) do {\
-		(dir)->i_ctime = (dir)->i_mtime = current_kernel_time64(); \
+		ktime_get_coarse_ts64(&((dir)->i_mtime));	\
+		(dir)->i_ctime = (dir)->i_mtime; \
 	} while (0)
 #endif
 
