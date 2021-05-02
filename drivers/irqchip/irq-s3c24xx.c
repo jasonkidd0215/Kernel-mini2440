@@ -1327,4 +1327,23 @@ int __init s3c2416_init_intc_of(struct device_node *np,
 				s3c2416_ctrl, ARRAY_SIZE(s3c2416_ctrl));
 }
 IRQCHIP_DECLARE(s3c2416_irq, "samsung,s3c2416-irq", s3c2416_init_intc_of);
+
+static struct s3c24xx_irq_of_ctrl mini2440_ctrl[] = {
+	{
+		.name = "intc",
+		.offset = 0,
+	}, {
+		.name = "subintc",
+		.offset = 0x18,
+		.parent = &s3c_intc[0],
+	}
+};
+
+int __init mini2440_init_intc_of(struct device_node *np,
+			struct device_node *interrupt_parent)
+{
+	return s3c_init_intc_of(np, interrupt_parent,
+				mini2440_ctrl, ARRAY_SIZE(mini2440_ctrl));
+}
+IRQCHIP_DECLARE(mini2440_irq, "samsung,mini2440-irq", mini2440_init_intc_of);
 #endif

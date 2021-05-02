@@ -1,0 +1,102 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Samsung S3C2416 pinctrl settings
+ *
+ * Copyright (c) 2013 Heiko Stuebner <heiko@sntech.de>
+ */
+
+#include <dt-bindings/pinctrl/samsung.h>
+
+&pinctrl_0 {
+	/*
+	 * Pin banks
+	 */
+
+	gpa: gpa {
+		gpio-controller;
+		#gpio-cells = <2>;
+	};
+
+	gpb: gpb {
+		gpio-controller;
+		#gpio-cells = <2>;
+	};
+
+	gpc: gpc {
+		gpio-controller;
+		#gpio-cells = <2>;
+	};
+
+	gpd: gpd {
+		gpio-controller;
+		#gpio-cells = <2>;
+	};
+
+	gpe: gpe {
+		gpio-controller;
+		#gpio-cells = <2>;
+	};
+
+	gpf: gpf {
+		gpio-controller;
+		#gpio-cells = <2>;
+		interrupt-controller;
+		#interrupt-cells = <2>;
+	};
+
+	gpg: gpg {
+		gpio-controller;
+		#gpio-cells = <2>;
+		interrupt-controller;
+		#interrupt-cells = <2>;
+	};
+
+	gph: gph {
+		gpio-controller;
+		#gpio-cells = <2>;
+	};
+
+	gpj: gpj {
+		gpio-controller;
+		#gpio-cells = <2>;
+	};
+
+	/*
+	 * Pin groups
+	 */
+
+	uart0_data: uart0-data {
+		samsung,pins = "gph-2", "gph-3";
+		samsung,pin-function = <EXYNOS_PIN_FUNC_2>;
+	};
+
+	uart0_fctl: uart0-fctl {
+		samsung,pins = "gph-0", "gph-1";
+		samsung,pin-function = <EXYNOS_PIN_FUNC_2>;
+	};
+
+	uart1_data: uart1-data {
+		samsung,pins = "gph-4", "gph-5";
+		samsung,pin-function = <EXYNOS_PIN_FUNC_2>;
+	};
+
+	uart1_fctl: uart1-fctl {
+		samsung,pins = "gph-6", "gph-7";
+		samsung,pin-function = <EXYNOS_PIN_FUNC_3>;
+	};
+
+	i2c0_bus: i2c0-bus {
+		samsung,pins = "gpe-14", "gpe-15";
+		samsung,pin-function = <EXYNOS_PIN_FUNC_2>;
+	};
+
+	spi0_bus: spi0-bus {
+		samsung,pins = "gpe-11", "gpe-12", "gpe-13";
+		samsung,pin-function = <EXYNOS_PIN_FUNC_2>;
+	};
+
+	sd0_clk: sd0-clk {
+		samsung,pins = "gpe-5";
+		samsung,pin-function = <EXYNOS_PIN_FUNC_2>;
+	};
+};
