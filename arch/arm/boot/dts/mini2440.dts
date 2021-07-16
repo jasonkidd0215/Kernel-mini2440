@@ -6,80 +6,31 @@
  */
 
 /dts-v1/;
-#include <dt-bindings/clock/s3c2410.h>
-#include "s3c24xx.dtsi"
-#include "mini2440-pinctrl.dtsi"
+#include "s3c2440.dtsi"
 
 / {
-	model = "Samsung MINI2440 SoC";
+	model = "MINI2440";
 	compatible = "samsung,mini2440";
 
-	cpus {
-		cpu {
-			compatible = "arm,arm926ej-s";
-		};
+	chosen {
+                bootargs = "noinitrd root=/dev/mtdblock3 init=/linuxrc console=ttySAC0,115200 rootfstype=yaffs2 rw";
+        };
+
+	memory@30000000 {
+		device_type = "memory";
+		reg =  <0x30000000 0x4000000>;
 	};
 
-	interrupt-controller@4a000000 {
-		compatible = "samsung,mini2440-irq";
-	};
-
-	clocks: clock-controller@4c000000 {
-		compatible = "samsung,s3c2440-clock";
-		reg = <0x4c000000 0x40>;
-		#clock-cells = <1>;
-	};
-
-	pinctrl@56000000 {
-		compatible = "samsung,s3c2440-pinctrl";
-	};
-	
-	/*uart_0: serial@50000000 {
-		compatible = "samsung,s3c2440-uart";
-		clock-names = "uart", "clk_uart_baud2";
-		clocks = <&clocks PCLK_UART0>, <&clocks PCLK_UART0>;
-		pinctrl-names = "default";
-		pinctrl-0 = <&uart0_data>, <&uart0_fctl>;
-		status = "okay";
-	};
-
-	uart_1: serial@50004000 {
-		compatible = "samsung,s3c2440-uart";
-		clock-names = "uart", "clk_uart_baud2";
-		clocks = <&clocks PCLK_UART1>, <&clocks PCLK_UART1>;
-		pinctrl-names = "default";
-		pinctrl-0 = <&uart1_data>, <&uart1_fctl>;
-		status = "okay";
-	};
-
-	uart_2: serial@50008000 {
-		compatible = "samsung,s3c2440-uart";
-		clock-names = "uart", "clk_uart_baud2";
-		clocks = <&clocks PCLK_UART2>, <&clocks PCLK_UART2>;
-	};*/
-
-	timer@51000000 {
-		clocks = <&clocks PCLK_PWM>;
-		clock-names = "timers";
-	};
-
-	watchdog: watchdog@53000000 {
-		interrupts = <1 9 13 3>;
-		clocks = <&clocks PCLK>;
-		clock-names = "watchdog";
-		status = "okay";
-	};
-
-	rtc: rtc@57000000 {
-		compatible = "samsung,s3c2416-rtc";
-		clocks = <&clocks PCLK_RTC>;
-		clock-names = "rtc";
-		status = "okay";
-	};
-
-	i2c@54000000 {
-		compatible = "samsung,s3c2440-i2c";
-		clocks = <&clocks PCLK_I2C>;
-		clock-names = "i2c";
-	};
+        clocks {
+         compatible = "simple-bus";
+         #address-cells = <1>;
+         #size-cells = <0>;
+         xti: oscillator@0 {
+             compatible = "fixed-clock";
+             reg = <0>;
+             clock-frequency = <12000000>;
+             clock-output-names = "xti";
+             #clock-cells = <0>;
+         };
+     };
 };
